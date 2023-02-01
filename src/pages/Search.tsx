@@ -42,6 +42,7 @@ export default function Search() {
     }, delay);
   };
 
+  // lodash 사용한 throttling
   const lodashThrottling: LodashControlDelay = useCallback(
     (callback, delay) => {
       _.throttle(callback, delay);
@@ -49,6 +50,7 @@ export default function Search() {
     []
   );
 
+  // lodash 사용한 debouncing
   const lodashDebouncing: LodashControlDelay = useCallback(
     (callback, delay) => {
       _.debounce(callback, delay);
@@ -56,6 +58,7 @@ export default function Search() {
     []
   );
 
+  // checkbox, radio 선택 값에 따라서 throttling, debouncing 함수를 선택한다.
   const handleEvent = useCallback(
     (callback: () => void, delay: number) => {
       switch (checked) {
@@ -76,6 +79,7 @@ export default function Search() {
     [checked, isLodash, lodashThrottling, lodashDebouncing]
   );
 
+  // input에 텍스트를 입력했을 때, handleEvent 함수를 실행한다.
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
     handleEvent(() => {
@@ -83,12 +87,14 @@ export default function Search() {
     }, delay);
   };
 
+  // window resize 이벤트가 발생했을 때, handleEvent 함수를 실행한다.
   const handleResize = useCallback(
     () => handleEvent(() => console.log('reszied'), delay),
     [handleEvent, delay]
   );
 
   useEffect(() => {
+    // window resize 이벤트 리스너를 등록한다.
     window.addEventListener('resize', handleResize);
 
     // cleanup 함수로 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거한다.
@@ -102,6 +108,7 @@ export default function Search() {
   return (
     <Container>
       <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+      {/* lodash 사용여부 체크 */}
       <label>
         <input
           type='checkbox'
@@ -111,6 +118,7 @@ export default function Search() {
         />
         lodash 사용하기
       </label>
+      {/* throttling, debouncing 선택 */}
       {['throttling', 'debouncing'].map((name) => (
         <label key={name}>
           <input
@@ -123,7 +131,7 @@ export default function Search() {
         </label>
       ))}
       <Input type='inputText' onChange={handleInputChange} />
-      <p>일반: {inputText}</p>
+      <p>text: {inputText}</p>
       <p>searchText: {searchText}</p>
     </Container>
   );
