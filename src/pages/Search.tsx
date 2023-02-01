@@ -45,7 +45,11 @@ export default function Search() {
   // lodash 사용한 throttling
   const lodashThrottling: LodashControlDelay = useCallback(
     (callback, delay) => {
-      _.throttle(callback, delay);
+      console.log('lodashThrottling');
+      _.throttle(callback, delay, {
+        leading: true,
+        trailing: true,
+      });
     },
     []
   );
@@ -53,7 +57,11 @@ export default function Search() {
   // lodash 사용한 debouncing
   const lodashDebouncing: LodashControlDelay = useCallback(
     (callback, delay) => {
-      _.debounce(callback, delay);
+      console.log('lodashDebouncing');
+      _.debounce(callback, delay, {
+        leading: false,
+        trailing: true,
+      });
     },
     []
   );
