@@ -36,6 +36,9 @@ export default function Home() {
       <Link to='/search'>
         <h1>Search</h1>
       </Link>
+      <Link to='/test'>
+        <h1>Test</h1>
+      </Link>
     </div>
   );
 }

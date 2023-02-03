@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import _ from 'lodash';
+import { throttle, debounce } from 'lodash';
 
 type ControlDelay = (
   callback: (inputText?: string) => void,
@@ -44,25 +44,13 @@ export default function Search() {
 
   // lodash 사용한 throttling
   const lodashThrottling: LodashControlDelay = useCallback(
-    (callback, delay) => {
-      console.log('lodashThrottling');
-      _.throttle(callback, delay, {
-        leading: true,
-        trailing: true,
-      })();
-    },
+    (callback, delay) => throttle(callback, delay)(),
     []
   );
 
   // lodash 사용한 debouncing
   const lodashDebouncing: LodashControlDelay = useCallback(
-    (callback, delay) => {
-      console.log('lodashDebouncing');
-      _.debounce(callback, delay, {
-        leading: false,
-        trailing: true,
-      })();
-    },
+    (callback, delay) => debounce(callback, delay)(),
     []
   );
 
