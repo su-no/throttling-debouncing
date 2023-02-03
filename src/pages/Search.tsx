@@ -49,7 +49,7 @@ export default function Search() {
       _.throttle(callback, delay, {
         leading: true,
         trailing: true,
-      });
+      })();
     },
     []
   );
@@ -61,7 +61,7 @@ export default function Search() {
       _.debounce(callback, delay, {
         leading: false,
         trailing: true,
-      });
+      })();
     },
     []
   );
@@ -90,9 +90,7 @@ export default function Search() {
   // input에 텍스트를 입력했을 때, handleEvent 함수를 실행한다.
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
-    handleEvent(() => {
-      setSearchText(e.target.value);
-    }, delay);
+    handleEvent(() => setSearchText(e.target.value), delay);
   };
 
   // window resize 이벤트가 발생했을 때, handleEvent 함수를 실행한다.
